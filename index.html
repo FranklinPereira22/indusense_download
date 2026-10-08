@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InduSense - Monitoramento Industrial e IoT em Tempo Real</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#0B0F17',
+                            card: '#131B2A',
+                            accent: '#00F2FE',
+                            cyan: '#4FACFE',
+                            gray: '#8C9BAE'
+                        }
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-12px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0B0F17;
+            color: #F3F4F6;
+        }
+        .glow-accent {
+            box-shadow: 0 0 25px rgba(0, 242, 254, 0.25);
+        }
+        .glow-card:hover {
+            box-shadow: 0 0 20px rgba(79, 172, 254, 0.15);
+            border-color: rgba(0, 242, 254, 0.4);
+        }
+        .bg-grid {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
+    </style>
+</head>
+<body class="bg-brand-dark text-gray-100 min-h-screen flex flex-col antialiased bg-grid selection:bg-brand-accent selection:text-brand-dark">
+
+    <!-- Header / Navbar -->
+    <header class="sticky top-0 z-50 backdrop-blur-md bg-brand-dark/80 border-b border-gray-800/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-cyan to-brand-accent flex items-center justify-center text-brand-dark font-extrabold text-xl shadow-lg group-hover:scale-105 transition-transform">
+                    <i data-lucide="cpu" class="w-6 h-6 stroke-[2.5]"></i>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-xl font-bold tracking-tight text-white flex items-center gap-1">
+                        Indu<span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-cyan to-brand-accent">Sense</span>
+                    </span>
+                    <span class="text-[10px] uppercase tracking-widest text-brand-gray font-semibold">IoT Solutions</span>
+                </div>
+            </a>
+
+            <!-- Navigation Links -->
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-gray-300">
+                <a href="#recursos" class="hover:text-brand-accent transition-colors">Recursos</a>
+                <a href="#preview" class="hover:text-brand-accent transition-colors">Interface</a>
+                <a href="#requisitos" class="hover:text-brand-accent transition-colors">Requisitos</a>
+                <a href="#faq" class="hover:text-brand-accent transition-colors">FAQ</a>
+            </nav>
+
+            <!-- Quick Download CTA -->
+            <div>
+                <a href="InduSense.apk" download="InduSense.apk" class="relative inline-flex items-center justify-center p-0.5 overflow-hidden text-sm font-semibold rounded-xl group bg-gradient-to-br from-brand-cyan to-brand-accent group-hover:from-brand-cyan group-hover:to-brand-accent hover:text-white text-white shadow-lg transition-all">
+                    <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-brand-dark rounded-[10px] group-hover:bg-opacity-0 flex items-center gap-2">
+                        <i data-lucide="download" class="w-4 h-4 text-brand-accent group-hover:text-white"></i>
+                        <span>Baixar APK</span>
+                    </span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        <!-- Hero Section -->
+        <section class="relative pt-12 pb-20 md:pt-20 md:pb-28 overflow-hidden">
+            <!-- Glow background effects -->
+            <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-brand-cyan/10 rounded-full blur-3xl pointer-events-none"></div>
+            
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="grid lg:grid-cols-12 gap-12 items-center">
+                    <!-- Left Hero Content -->
+                    <div class="lg:col-span-7 space-y-8 text-center lg:text-left">
+                        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-brand-cyan/30 bg-brand-cyan/10 text-brand-accent text-xs font-semibold tracking-wide uppercase">
+                            <span class="w-2 h-2 rounded-full bg-brand-accent animate-ping"></span>
+                            Versão Android 2.4.0 Disponível
+                        </div>
+                        
+                        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight">
+                            Controle e Telemetria Industrial na <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-cyan to-brand-accent">Palma da Mão</span>
+                        </h1>
+                        
+                        <p class="text-lg text-brand-gray max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed">
+                            O app <strong class="text-white">InduSense</strong> conecta seus sensores IoT, PLCs e maquinários industriais diretamente ao seu smartphone. Monitore pressão, temperatura e eficiência em tempo real com alertas de alta precisão.
+                        </p>
+
+                        <!-- Download Call To Action Box -->
+                        <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+                            <a href="InduSense.apk" download="InduSense.apk" id="download-btn" class="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-brand-cyan to-brand-accent hover:opacity-90 text-brand-dark font-bold rounded-xl shadow-lg glow-accent flex items-center justify-center gap-3 transition-all transform hover:-translate-y-0.5">
+                                <i data-lucide="download" class="w-5 h-5 stroke-[2.5]"></i>
+                                <span>Baixar InduSense.apk</span>
+                                <span class="text-xs bg-brand-dark/20 px-2 py-0.5 rounded font-mono">v2.4.0</span>
+                            </a>
+                            
+                            <a href="#preview" class="w-full sm:w-auto px-6 py-4 bg-brand-card hover:bg-gray-800 text-white font-medium rounded-xl border border-gray-700/80 flex items-center justify-center gap-2 transition-all">
+                                <i data-lucide="eye" class="w-5 h-5 text-brand-gray"></i>
+                                <span>Ver Interface</span>
+                            </a>
+                        </div>
+
+                        <!-- App Meta Badges -->
+                        <div class="flex flex-wrap items-center justify-center lg:justify-start gap-6 text-xs text-brand-gray pt-4 border-t border-gray-800/80">
+                            <div class="flex items-center gap-2">
+                                <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400"></i>
+                                <span>Livre de Malwares</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i data-lucide="smartphone" class="w-4 h-4 text-brand-cyan"></i>
+                                <span>Android 7.0 ou superior</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i data-lucide="hard-drive" class="w-4 h-4 text-brand-accent"></i>
+                                <span>Tamanho: 28.4 MB</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Hero Mockup Display -->
+                    <div class="lg:col-span-5 flex justify-center relative">
+                        <!-- Phone Mockup Outer Frame -->
+                        <div class="relative w-72 sm:w-80 h-[580px] bg-gray-900 rounded-[48px] p-3 border-4 border-gray-800 shadow-2xl animate-float glow-card">
+                            <!-- Speaker & Camera Notch -->
+                            <div class="absolute top-6 left-1/2 -translate-x-1/2 w-28 h-4 bg-gray-900 rounded-full z-20 flex items-center justify-center">
+                                <div class="w-12 h-1 bg-gray-800 rounded-full"></div>
+                            </div>
+                            <!-- Phone Screen -->
+                            <div class="w-full h-full bg-brand-dark rounded-[38px] overflow-hidden flex flex-col relative pt-8 border border-gray-800">
+                                <!-- App Header Mock -->
+                                <div class="px-5 py-3 border-b border-gray-800 flex justify-between items-center bg-brand-card/50">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-6 h-6 rounded-md bg-gradient-to-tr from-brand-cyan to-brand-accent flex items-center justify-center text-brand-dark font-bold text-xs">IS</div>
+                                        <span class="text-xs font-semibold text-white">Dashboard Planta #01</span>
+                                    </div>
+                                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                                </div>
+                                <!-- App Dashboard Content Mock -->
+                                <div class="p-4 space-y-3 flex-1 overflow-hidden text-left">
+                                    <!-- Metric Card 1 -->
+                                    <div class="p-3 bg-brand-card rounded-xl border border-gray-800 space-y-1">
+                                        <div class="flex justify-between text-[10px] text-brand-gray">
+                                            <span>Temperatura Caldeira</span>
+                                            <span class="text-emerald-400 font-mono">Normal</span>
+                                        </div>
+                                        <div class="text-lg font-bold text-white font-mono">78.4 °C</div>
+                                        <div class="w-full bg-gray-800 rounded-full h-1.5 overflow-hidden">
+                                            <div class="bg-brand-cyan h-full w-[70%]"></div>
+                                        </div>
+                                    </div>
+                                    <!-- Metric Card 2 -->
+                                    <div class="p-3 bg-brand-card rounded-xl border border-gray-800 space-y-1">
+                                        <div class="flex justify-between text-[10px] text-brand-gray">
+                                            <span>Pressão Hidráulica</span>
+                                            <span class="text-amber-400 font-mono">Atenção</span>
+                                        </div>
+                                        <div class="text-lg font-bold text-white font-mono">142.8 PSI</div>
+                                        <div class="w-full bg-gray-800 rounded-full h-1.5 overflow-hidden">
+                                            <div class="bg-amber-400 h-full w-[88%]"></div>
+                                        </div>
+                                    </div>
+                                    <!-- Realtime Chart Mock -->
+                                    <div class="p-3 bg-brand-card rounded-xl border border-gray-800">
+                                        <div class="text-[10px] text-brand-gray mb-2">Vibração do Extrusor (24h)</div>
+                                        <div class="h-20 flex items-end justify-between gap-1 pt-2">
+                                            <div class="w-full bg-brand-cyan/20 h-[40%] rounded-t"></div>
+                                            <div class="w-full bg-brand-cyan/30 h-[60%] rounded-t"></div>
+                                            <div class="w-full bg-brand-cyan/50 h-[35%] rounded-t"></div>
+                                            <div class="w-full bg-brand-cyan h-[80%] rounded-t"></div>
+                                            <div class="w-full bg-brand-accent h-[95%] rounded-t"></div>
+                                            <div class="w-full bg-brand-cyan/60 h-[50%] rounded-t"></div>
+                                        </div>
+                                    </div>
+                                    <!-- Alert Box Mock -->
+                                    <div class="p-2.5 bg-red-500/10 border border-red-500/30 rounded-lg flex items-center gap-2">
+                                        <i data-lucide="triangle-alert" class="w-4 h-4 text-red-400 shrink-0"></i>
+                                        <span class="text-[10px] text-red-300">Alerta de vibração no motor B2 setado</span>
+                                    </div>
+                                </div>
+                                <!-- App Bottom Nav Mock -->
+                                <div class="px-6 py-3 border-t border-gray-800 bg-brand-card/80 flex justify-between text-brand-gray">
+                                    <i data-lucide="layout-dashboard" class="w-4 h-4 text-brand-accent"></i>
+                                    <i data-lucide="bell" class="w-4 h-4"></i>
+                                    <i data-lucide="sliders" class="w-4 h-4"></i>
+                                    <i data-lucide="user" class="w-4 h-4"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Key Features Section -->
+        <section id="recursos" class="py-20 bg-brand-card/40 border-y border-gray-800/80">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-xs uppercase tracking-widest text-brand-accent font-semibold mb-2">Recursos Principais</h2>
+                    <p class="text-3xl sm:text-4xl font-extrabold text-white">Engenharia e IoT Unidas em Uma Plataforma Móvel</p>
+                    <p class="text-brand-gray mt-4">Desenvolvido sob medida para engenheiros de manutenção, gerentes de produção e operadores de chão de fábrica.</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Feature Card 1 -->
+                    <div class="p-6 bg-brand-card rounded-2xl border border-gray-800 transition-all duration-300 hover:-translate-y-1 glow-card">
+                        <div class="w-12 h-12 rounded-xl bg-brand-cyan/10 border border-brand-cyan/20 flex items-center justify-center text-brand-cyan mb-5">
+                            <i data-lucide="activity" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Telemetria em Tempo Real</h3>
+                        <p class="text-brand-gray text-sm leading-relaxed">Conexão direta com protocolos MQTT, OPC UA e Modbus TCP para amostragem instantânea de dados industriais.</p>
+                    </div>
+
+                    <!-- Feature Card 2 -->
+                    <div class="p-6 bg-brand-card rounded-2xl border border-gray-800 transition-all duration-300 hover:-translate-y-1 glow-card">
+                        <div class="w-12 h-12 rounded-xl bg-brand-accent/10 border border-brand-accent/20 flex items-center justify-center text-brand-accent mb-5">
+                            <i data-lucide="bell-ring" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Alertas PUSH Críticos</h3>
+                        <p class="text-brand-gray text-sm leading-relaxed">Receba notificações imediatas no celular quando parâmetros operacionais ultrapassarem os limites de segurança.</p>
+                    </div>
+
+                    <!-- Feature Card 3 -->
+                    <div class="p-6 bg-brand-card rounded-2xl border border-gray-800 transition-all duration-300 hover:-translate-y-1 glow-card">
+                        <div class="w-12 h-12 rounded-xl bg-brand-cyan/10 border border-brand-cyan/20 flex items-center justify-center text-brand-cyan mb-5">
+                            <i data-lucide="wifi-off" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Modo Offline & Sync</h3>
+                        <p class="text-brand-gray text-sm leading-relaxed">Armazene logs localmente em zonas sem cobertura de rede e sincronize automaticamente ao reconectar.</p>
+                    </div>
+
+                    <!-- Feature Card 4 -->
+                    <div class="p-6 bg-brand-card rounded-2xl border border-gray-800 transition-all duration-300 hover:-translate-y-1 glow-card">
+                        <div class="w-12 h-12 rounded-xl bg-brand-accent/10 border border-brand-accent/20 flex items-center justify-center text-brand-accent mb-5">
+                            <i data-lucide="shield-check" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Criptografia End-to-End</h3>
+                        <p class="text-brand-gray text-sm leading-relaxed">Proteção total dos seus dados de produção com comunicação SSL/TLS e autenticação OAuth2 robusta.</p>
+                    </div>
+
+                    <!-- Feature Card 5 -->
+                    <div class="p-6 bg-brand-card rounded-2xl border border-gray-800 transition-all duration-300 hover:-translate-y-1 glow-card">
+                        <div class="w-12 h-12 rounded-xl bg-brand-cyan/10 border border-brand-cyan/20 flex items-center justify-center text-brand-cyan mb-5">
+                            <i data-lucide="line-chart" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Análise Preditiva IA</h3>
+                        <p class="text-brand-gray text-sm leading-relaxed">Algoritmos inteligentes integrados para identificação antecipada de falhas e desgaste mecânico.</p>
+                    </div>
+
+                    <!-- Feature Card 6 -->
+                    <div class="p-6 bg-brand-card rounded-2xl border border-gray-800 transition-all duration-300 hover:-translate-y-1 glow-card">
+                        <div class="w-12 h-12 rounded-xl bg-brand-accent/10 border border-brand-accent/20 flex items-center justify-center text-brand-accent mb-5">
+                            <i data-lucide="file-text" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Relatórios em PDF/CSV</h3>
+                        <p class="text-brand-gray text-sm leading-relaxed">Gere e compartilhe relatórios completos de desempenho das plantas diretamente do seu aplicativo.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- App Preview / Showcase -->
+        <section id="preview" class="py-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-xs uppercase tracking-widest text-brand-cyan font-semibold mb-2">Experiência Visual</h2>
+                    <p class="text-3xl sm:text-4xl font-extrabold text-white">Interface Projetada para Foco e Produtividade</p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8 text-center">
+                    <!-- Screen 1 -->
+                    <div class="bg-brand-card p-4 rounded-2xl border border-gray-800 space-y-4">
+                        <div class="h-64 bg-gray-900 rounded-xl flex items-center justify-center border border-gray-800 relative overflow-hidden">
+                            <i data-lucide="layout-grid" class="w-16 h-16 text-brand-cyan/40"></i>
+                            <div class="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-brand-card">
+                                <span class="text-xs font-semibold text-brand-accent uppercase tracking-wider">Dashboard Multi-Planta</span>
+                            </div>
+                        </div>
+                        <h4 class="text-lg font-bold text-white">Visão Holística</h4>
+                        <p class="text-brand-gray text-xs">Visualize o status operacional de múltiplos setores e unidades em uma única tela unificada.</p>
+                    </div>
+
+                    <!-- Screen 2 -->
+                    <div class="bg-brand-card p-4 rounded-2xl border border-gray-800 space-y-4">
+                        <div class="h-64 bg-gray-900 rounded-xl flex items-center justify-center border border-gray-800 relative overflow-hidden">
+                            <i data-lucide="sliders-horizontal" class="w-16 h-16 text-brand-accent/40"></i>
+                            <div class="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-brand-card">
+                                <span class="text-xs font-semibold text-brand-accent uppercase tracking-wider">Ajuste de Setpoints</span>
+                            </div>
+                        </div>
+                        <h4 class="text-lg font-bold text-white">Controle de Ativos</h4>
+                        <p class="text-brand-gray text-xs">Ajuste faixas de tolerância, calibração de sensores e parâmetros operacionais de forma remota.</p>
+                    </div>
+
+                    <!-- Screen 3 -->
+                    <div class="bg-brand-card p-4 rounded-2xl border border-gray-800 space-y-4">
+                        <div class="h-64 bg-gray-900 rounded-xl flex items-center justify-center border border-gray-800 relative overflow-hidden">
+                            <i data-lucide="history" class="w-16 h-16 text-brand-cyan/40"></i>
+                            <div class="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-brand-card">
+                                <span class="text-xs font-semibold text-brand-accent uppercase tracking-wider">Histórico Pormenorizado</span>
+                            </div>
+                        </div>
+                        <h4 class="text-lg font-bold text-white">Rastreabilidade Total</h4>
+                        <p class="text-brand-gray text-xs">Acesse histórico completo de eventos e ocorrências para auditoria e manutenção preventiva.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Requirements and How to Install -->
+        <section id="requisitos" class="py-20 bg-brand-card/40 border-y border-gray-800/80">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid lg:grid-cols-2 gap-12">
+                    <!-- Installation Steps -->
+                    <div>
+                        <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+                            <i data-lucide="download-cloud" class="w-6 h-6 text-brand-cyan"></i>
+                            Como Instalar o APK no seu Android
+                        </h2>
+                        <ol class="space-y-6">
+                            <li class="flex gap-4">
+                                <div class="w-8 h-8 rounded-full bg-brand-cyan/20 text-brand-cyan border border-brand-cyan/40 flex items-center justify-center font-bold text-sm shrink-0">1</div>
+                                <div>
+                                    <h3 class="text-white font-semibold mb-1">Baixe o Arquivo APK</h3>
+                                    <p class="text-brand-gray text-sm">Clique no botão "Baixar InduSense.apk" no topo da página para iniciar o download.</p>
+                                </div>
+                            </li>
+                            <li class="flex gap-4">
+                                <div class="w-8 h-8 rounded-full bg-brand-cyan/20 text-brand-cyan border border-brand-cyan/40 flex items-center justify-center font-bold text-sm shrink-0">2</div>
+                                <div>
+                                    <h3 class="text-white font-semibold mb-1">Permita Fontes Desconhecidas</h3>
+                                    <p class="text-brand-gray text-sm">Vá em <i>Configurações > Segurança</i> do celular e habilite a opção <i>"Instalar apps desconhecidos"</i> para o navegador utilizado.</p>
+                                </div>
+                            </li>
+                            <li class="flex gap-4">
+                                <div class="w-8 h-8 rounded-full bg-brand-cyan/20 text-brand-cyan border border-brand-cyan/40 flex items-center justify-center font-bold text-sm shrink-0">3</div>
+                                <div>
+                                    <h3 class="text-white font-semibold mb-1">Conclua a Instalação</h3>
+                                    <p class="text-brand-gray text-sm">Abra o arquivo baixado através da barra de notificações ou gerenciador de arquivos e confirme a instalação.</p>
+                                </div>
+                            </li>
+                        </ol>
+                    </div>
+
+                    <!-- System Requirements Card -->
+                    <div class="bg-brand-card p-8 rounded-2xl border border-gray-800 flex flex-col justify-between">
+                        <div>
+                            <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+                                <i data-lucide="cpu" class="w-6 h-6 text-brand-accent"></i>
+                                Requisitos de Sistema
+                            </h2>
+                            <div class="space-y-4 text-sm">
+                                <div class="flex justify-between py-2.5 border-b border-gray-800">
+                                    <span class="text-brand-gray">Sistema Operacional</span>
+                                    <span class="text-white font-medium">Android 7.0 (Nougat) ou superior</span>
+                                </div>
+                                <div class="flex justify-between py-2.5 border-b border-gray-800">
+                                    <span class="text-brand-gray">Memória RAM Mínima</span>
+                                    <span class="text-white font-medium">2 GB (4 GB recomendado)</span>
+                                </div>
+                                <div class="flex justify-between py-2.5 border-b border-gray-800">
+                                    <span class="text-brand-gray">Espaço em Disco</span>
+                                    <span class="text-white font-medium">50 MB livres</span>
+                                </div>
+                                <div class="flex justify-between py-2.5 border-b border-gray-800">
+                                    <span class="text-brand-gray">Conectividade</span>
+                                    <span class="text-white font-medium">Wi-Fi / 4G / 5G / Bluetooth 5.0</span>
+                                </div>
+                                <div class="flex justify-between py-2.5 border-b border-gray-800">
+                                    <span class="text-brand-gray">Arquitetura</span>
+                                    <span class="text-white font-medium">ARM64 / x86_64</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 p-4 bg-brand-dark/50 rounded-xl border border-gray-800/80 flex items-center gap-3">
+                            <i data-lucide="info" class="w-5 h-5 text-brand-cyan shrink-0"></i>
+                            <p class="text-xs text-brand-gray">Para integração completa com gateways locais, certifique-se de que o aparelho esteja na mesma subnet da rede industrial.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Accordion Section -->
+        <section id="faq" class="py-20 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-extrabold text-white">Perguntas Frequentes (FAQ)</h2>
+                <p class="text-brand-gray mt-2">Dúvidas comuns sobre a instalação e suporte do InduSense</p>
+            </div>
+
+            <div class="space-y-4" id="faq-accordion">
+                <!-- FAQ Item 1 -->
+                <div class="bg-brand-card rounded-xl border border-gray-800 overflow-hidden">
+                    <button class="faq-toggle w-full p-5 text-left font-semibold text-white flex justify-between items-center hover:text-brand-accent transition-colors">
+                        <span>É seguro instalar este arquivo APK diretamente?</span>
+                        <i data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-200"></i>
+                    </button>
+                    <div class="faq-content hidden px-5 pb-5 text-sm text-brand-gray border-t border-gray-800/50 pt-3">
+                        Sim! O APK distribuído neste site oficial é assinado digitalmente pela InduSense e passa por testes rigorosos de segurança e escaneamento antivírus antes da publicação.
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="bg-brand-card rounded-xl border border-gray-800 overflow-hidden">
+                    <button class="faq-toggle w-full p-5 text-left font-semibold text-white flex justify-between items-center hover:text-brand-accent transition-colors">
+                        <span>Preciso de uma conta para utilizar o aplicativo?</span>
+                        <i data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-200"></i>
+                    </button>
+                    <div class="faq-content hidden px-5 pb-5 text-sm text-brand-gray border-t border-gray-800/50 pt-3">
+                        Sim, para sincronizar com seus sensores e servidores da planta é necessária uma credencial corporativa fornecida pelo administrador do sistema da sua empresa.
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="bg-brand-card rounded-xl border border-gray-800 overflow-hidden">
+                    <button class="faq-toggle w-full p-5 text-left font-semibold text-white flex justify-between items-center hover:text-brand-accent transition-colors">
+                        <span>Como realizo as atualizações futuras do aplicativo?</span>
+                        <i data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-200"></i>
+                    </button>
+                    <div class="faq-content hidden px-5 pb-5 text-sm text-brand-gray border-t border-gray-800/50 pt-3">
+                        O próprio aplicativo InduSense notificará você quando houver uma nova versão disponível para download ou você poderá consultar esta mesma página de download.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom CTA -->
+        <section class="py-16 bg-gradient-to-b from-brand-card to-brand-dark border-t border-gray-800">
+            <div class="max-w-5xl mx-auto px-4 text-center space-y-6">
+                <h2 class="text-3xl font-extrabold text-white">Pronto para Otimizar sua Operação Industrial?</h2>
+                <p class="text-brand-gray max-w-2xl mx-auto">Baixe agora o InduSense APK e obtenha controle em tempo real dos seus sensores e equipamentos de produção.</p>
+                <div class="pt-4">
+                    <a href="InduSense.apk" download="InduSense.apk" class="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-brand-cyan to-brand-accent text-brand-dark font-bold rounded-xl shadow-lg glow-accent hover:opacity-90 transition-all">
+                        <i data-lucide="download" class="w-5 h-5 stroke-[2.5]"></i>
+                        <span>Baixar InduSense.apk Agora</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-brand-dark border-t border-gray-800/80 text-brand-gray text-sm py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-brand-cyan to-brand-accent flex items-center justify-center text-brand-dark font-extrabold text-sm">
+                    IS
+                </div>
+                <span class="text-white font-semibold">InduSense Technologies</span>
+            </div>
+
+            <div class="text-center md:text-left text-xs text-gray-500">
+                &copy; <span id="year"></span> InduSense IoT Solutions. Todos os direitos reservados.
+            </div>
+
+            <div class="flex space-x-6 text-xs">
+                <a href="#" class="hover:text-white transition-colors">Política de Privacidade</a>
+                <a href="#" class="hover:text-white transition-colors">Termos de Uso</a>
+                <a href="mailto:suporte@indusense.com" class="hover:text-white transition-colors">Suporte Técnico</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Update current year in footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Accordion functionality for FAQ
+        document.querySelectorAll('.faq-toggle').forEach(button => {
+            button.addEventListener('click', () => {
+                const content = button.nextElementSibling;
+                const icon = button.querySelector('i');
+                
+                // Toggle visibility
+                const isOpen = !content.classList.contains('hidden');
+                
+                // Close all standardly
+                document.querySelectorAll('.faq-content').forEach(c => c.classList.add('hidden'));
+                document.querySelectorAll('.faq-toggle i').forEach(i => i.style.transform = 'rotate(0deg)');
+
+                if (!isOpen) {
+                    content.classList.remove('hidden');
+                    icon.style.transform = 'rotate(180deg)';
+                }
+            });
+        });
